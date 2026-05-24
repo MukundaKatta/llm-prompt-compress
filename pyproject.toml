@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llm-prompt-compress"
+version = "0.1.0"
+description = "Heuristic prompt compression for LLM calls. LIGHT/MEDIUM/AGGRESSIVE levels strip politeness, filler verbs, redundancy. Preserves code blocks. Zero runtime deps."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Mukunda Rao Katta", email = "mukunda.vjcs6@gmail.com" }]
+keywords = [
+  "llm",
+  "ai",
+  "prompt",
+  "compression",
+  "tokens",
+  "agents",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Text Processing :: Filters",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.4"]
+
+[project.urls]
+Homepage = "https://github.com/MukundaKatta/llm-prompt-compress"
+Issues = "https://github.com/MukundaKatta/llm-prompt-compress/issues"
+Source = "https://github.com/MukundaKatta/llm-prompt-compress"
+"Sibling: agentfit" = "https://pypi.org/project/agentfit/"
+"Sibling: tool-output-truncate-py" = "https://pypi.org/project/tool-output-truncate-py/"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llm_prompt_compress"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/README.md", "/LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
