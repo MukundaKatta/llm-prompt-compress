@@ -1,5 +1,5 @@
 """Tests for llm-prompt-compress."""
-import pytest
+
 from llm_prompt_compress import compress, compress_messages, CompressResult
 
 

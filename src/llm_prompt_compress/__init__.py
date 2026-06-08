@@ -1,11 +1,29 @@
 """
 llm-prompt-compress: Heuristic prompt compression — shrink context to fit a token budget.
+
+Two complementary APIs are exposed:
+
+* ``compress`` / ``compress_messages`` / ``CompressResult`` — strategy-based
+  cleanup (whitespace, comments, code fences, hard truncation). Good for
+  trimming chat transcripts to a character budget.
+* ``compress_prompt`` / ``Compressor`` / ``Level`` — level-based heuristic
+  rewriting that strips politeness, filler, and wordy phrases while
+  preserving fenced code blocks. See :mod:`llm_prompt_compress.compress`.
 """
+
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Optional
+
+from llm_prompt_compress.compress import (
+    CompressionResult,
+    CompressionStats,
+    Compressor,
+    Level,
+)
+from llm_prompt_compress.compress import compress as compress_prompt
 
 
 @dataclass
@@ -131,10 +149,21 @@ def compress_messages(
         if msg.get("role") in skip or not isinstance(msg.get("content"), str):
             result.append(msg)
             continue
-        r = compress(msg["content"], max_chars=max_chars_per_message, strategies=strategies)
+        r = compress(
+            msg["content"], max_chars=max_chars_per_message, strategies=strategies
+        )
         total_saved += r.saved_chars
         result.append({**msg, "content": r.text})
     return result, total_saved
 
 
-__all__ = ["compress", "compress_messages", "CompressResult"]
+__all__ = [
+    "compress",
+    "compress_messages",
+    "CompressResult",
+    "compress_prompt",
+    "Compressor",
+    "Level",
+    "CompressionResult",
+    "CompressionStats",
+]
