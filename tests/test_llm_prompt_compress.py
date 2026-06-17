@@ -1,6 +1,15 @@
 """Tests for llm-prompt-compress."""
 
-from llm_prompt_compress import compress, compress_messages, CompressResult
+import os
+import sys
+
+# Ensure the src-layout package is importable without an editable install,
+# so the suite also runs under ``python3 -m unittest discover -s tests``.
+_SRC = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
+if _SRC not in sys.path:
+    sys.path.insert(0, _SRC)
+
+from llm_prompt_compress import compress, compress_messages, CompressResult  # noqa: E402
 
 
 def test_compress_whitespace_collapses_blanks():
